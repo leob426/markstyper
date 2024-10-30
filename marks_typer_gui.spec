@@ -1,14 +1,13 @@
 # -*- mode: python ; coding: utf-8 -*-
-
-import requests.certs  # Import requests certificates
+import requests.certs
 
 a = Analysis(
     ['marks_typer_gui.py'],
     pathex=[],
     binaries=[],
-    # Include the SSL certificate used by requests
+    # Explicitly add certifi and chardet packages as data
     datas=[(requests.certs.where(), "certifi")],
-    hiddenimports=[],
+    hiddenimports=['chardet', 'certifi'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
