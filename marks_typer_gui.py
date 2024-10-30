@@ -370,7 +370,7 @@ update_button = ttk.Button(root, text="Check for Updates", command=check_for_upd
 update_button.pack(side="bottom", pady=10)
 
 # Footer Label
-footer_label = ttk.Label(frame, text="Made by Mark", font=("Helvetica", 10, "italic"), style="Custom.TLabel")
+footer_label = ttk.Label(frame, text="Made by Mark & Leo", font=("Helvetica", 10, "italic"), style="Custom.TLabel")
 footer_label.pack(pady=(5, 0))
 
 # Load settings
