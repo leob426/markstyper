@@ -20,6 +20,7 @@ def check_for_update():
     try:
         # Fetch version info from GitHub
         response = requests.get('https://raw.githubusercontent.com/leob426/markstyper/main/version.txt')
+
         if response.status_code == 200:
             latest_version = response.text.strip()
             if latest_version > current_version:
