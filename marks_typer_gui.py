@@ -19,7 +19,7 @@ def check_for_update():
     current_version = '1.0.0'  # Update this if needed to match local version
     try:
         # Fetch version info from GitHub
-        response = requests.get('https://raw.githubusercontent.com/leob426/markstyper/main/version.txt')
+        response = requests.get('https://raw.githubusercontent.com/leob426/markstyper/main/version.txt', verify=False)
 
         if response.status_code == 200:
             latest_version = response.text.strip()
