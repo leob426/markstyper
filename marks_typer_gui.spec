@@ -5,9 +5,8 @@ a = Analysis(
     ['marks_typer_gui.py'],
     pathex=[],
     binaries=[],
-    # Explicitly add certifi and chardet packages as data
     datas=[(requests.certs.where(), "certifi")],
-    hiddenimports=['chardet', 'certifi'],
+    hiddenimports=['chardet', 'certifi', 'requests', 'unicodedata'],  # Include unicodedata
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
