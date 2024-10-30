@@ -1,11 +1,13 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+import requests.certs  # Import requests certificates
 
 a = Analysis(
     ['marks_typer_gui.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    # Include the SSL certificate used by requests
+    datas=[(requests.certs.where(), "certifi")],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -14,6 +16,7 @@ a = Analysis(
     noarchive=False,
     optimize=0,
 )
+
 pyz = PYZ(a.pure)
 
 exe = EXE(
