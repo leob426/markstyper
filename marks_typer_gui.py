@@ -14,23 +14,48 @@ import re  # For regular expressions
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 import sys
+import shutil
+import zipfile
+
 
 def check_for_update():
-    current_version = '1.0.0'  # Update this if needed to match local version
+    current_version = '1.0.0'  # Adjust to match your local version
     try:
-        # Fetch version info from GitHub
-        response = requests.get('https://raw.githubusercontent.com/leob426/markstyper/main/version.txt', verify=False)
-
+        response = requests.get('https://raw.githubusercontent.com/leob426/markstyper/main/version.txt')
         if response.status_code == 200:
             latest_version = response.text.strip()
             if latest_version > current_version:
-                messagebox.showinfo("Update Available", f"A new version ({latest_version}) is available.")
+                if messagebox.askyesno("Update Available", f"A new version ({latest_version}) is available. Do you want to update now?"):
+                    download_and_replace_file()
             else:
                 messagebox.showinfo("Up-to-Date", "You are using the latest version.")
         else:
             messagebox.showwarning("Update Check Failed", "Could not check for updates. Try again later.")
     except Exception as e:
         messagebox.showerror("Error", f"Update check failed: {e}")
+
+def download_and_replace_file():
+    try:
+        # URL of the latest version of marks_typer_gui.py on GitHub
+        file_url = 'https://raw.githubusercontent.com/leob426/markstyper/main/marks_typer_gui.py'
+        file_path = 'marks_typer_gui.py'  # Local path to save and replace
+
+        # Download the updated file
+        response = requests.get(file_url)
+        response.raise_for_status()  # Check if download was successful
+
+        # Write the downloaded content to the local file, replacing it
+        with open(file_path, 'wb') as f:
+            f.write(response.content)
+
+        messagebox.showinfo("Update Complete", "The app has been updated to the latest version. Restarting...")
+        
+        # Restart the application
+        root.destroy()  # Close the current instance
+        os.execl(sys.executable, sys.executable, *sys.argv)  # Restart the app
+    except Exception as e:
+        messagebox.showerror("Update Error", f"Failed to update: {e}")
+
 
 def autotype_with_errors(typing_speed_range, mistake_chance, words_text):
     # Activate target window (the currently active window)
@@ -370,7 +395,7 @@ update_button = ttk.Button(root, text="Check for Updates", command=check_for_upd
 update_button.pack(side="bottom", pady=10)
 
 # Footer Label
-footer_label = ttk.Label(frame, text="Made by Mark & Leo", font=("Helvetica", 10, "italic"), style="Custom.TLabel")
+footer_label = ttk.Label(frame, text="Made by Mark", font=("Helvetica", 10, "italic"), style="Custom.TLabel")
 footer_label.pack(pady=(5, 0))
 
 # Load settings
